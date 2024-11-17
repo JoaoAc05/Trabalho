@@ -1,0 +1,57 @@
+generator client {
+  provider        = "prisma-client-js"
+  binaryTargets = ["native", "windows", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Usuario {
+  id Int @id @default(autoincrement())
+  email String @unique 
+  nome String
+  senha String
+  status Int @default(0)
+  tipo Int @default(1)
+
+  Locacao Locacao[]
+}
+
+model Livro {
+  id Int @id @default(autoincrement())
+  nome String
+  paginas Int
+  autor String
+  editora String
+  valor Float
+
+
+  Biblioteca Biblioteca[]
+  Locacao Locacao[]
+}
+
+model Biblioteca {
+  id Int @id @default(autoincrement())
+  id_livro Int
+  quantidade Int
+  quantidade_disp Int
+
+  Livro Livro @relation(fields: [id_livro], references: [id])
+}
+
+model Locacao {
+  id Int @id @default(autoincrement())
+  id_cliente Int
+  id_livro Int
+  quantidade Int @default(1)
+  data_inicio DateTime @default(now())
+  data_devolucao DateTime?
+  valor Float
+  status Int @default(0)
+
+  Usuario Usuario @relation(fields: [id_cliente], references: [id])
+  Livro Livro @relation(fields: [id_livro], references: [id])
+}
