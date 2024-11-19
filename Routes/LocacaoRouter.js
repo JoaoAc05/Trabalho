@@ -9,6 +9,6 @@ LocacaoRouter.get('/:id', LocacaoController.getId);
 LocacaoRouter.post('/', LocacaoController.cadastro); //Iniciar locação
 LocacaoRouter.put('/', LocacaoController.alterar); 
 LocacaoRouter.delete('/:id', LocacaoController.deletar);
-LocacaoRouter.delete('/finalizar', LocacaoController.finalizar); //Finalizar locação
+LocacaoRouter.put('/finalizar', LocacaoController.finalizar); //Finalizar locação
 
 export { LocacaoRouter };

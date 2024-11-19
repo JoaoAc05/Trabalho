@@ -1,7 +1,7 @@
 import { prisma } from "../prisma.js";
 
 class locacaoController {
-    async getAll(req, res, next) { 
+    async getAll(req, res) { 
         try {
             const locacao = await prisma.locacao.findMany()
             res.status(200).json(locacao);
@@ -162,7 +162,7 @@ class locacaoController {
         // {id, data_devolucao} apenas
         const { id, data_devolucao } = req.body;
         const dataToUpdate = req.body;
-        
+
         if (!data_devolucao || !id){
             return res.status(400).json({ message: 'Os campos id e data_devolucao são obrigatórios.' })
         }
@@ -175,15 +175,12 @@ class locacaoController {
 
             const updateLocacao = await prisma.locacao.updateMany({
                 where: {
-                    id: Number(id),
+                    id: parseInt(id),
                 },
-                data: {
-                    data_devolucao: data_devolucao,
-                    status: 1
-                }, 
+                data:  dataToUpdate, 
             });
             if (updateLocacao.count === 0) {
-                return res.status(404).json({ message: 'Locacao não encontrado.' });
+                return res.status(400).json({ message: 'Locacao não encontrado.' });
             }
 
             const locacao = await prisma.locacao.findUnique({
@@ -197,20 +194,18 @@ class locacaoController {
                     id_livro: Number(locacao.id_livro)
                 }
             })
-            console.log(biblioteca.quantidade_disp)
 
             var disponivelAtual = biblioteca.quantidade_disp + locacao.quantidade;
 
             //Quando finalizar a locação, voltar a quantidade de livros disponíveis na biblioteca
             const updateBiblioteca = await prisma.biblioteca.updateMany({
                 where: {
-                    id_livro: Number(id_livro)
+                    id_livro: Number(locacao.id_livro)
                 },
                 data: {
                     quantidade_disp: disponivelAtual
                 }
             })
-            console.log(updateBiblioteca)
             if(updateBiblioteca.length === 0) {
                 return res.status(400).json({message: 'Erro ao voltar a quantidade disponível da biblioteca.'})
             }

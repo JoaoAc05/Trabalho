@@ -1,10 +1,10 @@
 import { prisma } from "../prisma.js";
 
 class livroController {
-    async getAll(req, res, next) { 
+    async getAll(req, res) { 
         try {
-            const livros = await prisma.Livro.findMany()
-            res.status(200).json(livros);livro
+            const livros = await prisma.livro.findMany()
+            res.status(200).json(livros);
             if (livros.length === 0 ) {
                 return res.status(404).json({message: 'Nenhum registro encontrado'})
             }
@@ -32,7 +32,7 @@ class livroController {
     };
 
     async cadastro(req, res) {
-        const { nome, paginas, autor, editora, quantidade} = req.body;
+        const { nome, paginas, autor, editora, valor, quantidade} = req.body;
 
         if(Number(quantidade) <= 0) {
             return res.status(400).json({ message: 'Quantidade deve ser maior que 0' });
@@ -44,7 +44,8 @@ class livroController {
                     nome: nome,
                     paginas: paginas,
                     autor: autor, 
-                    editora: editora
+                    editora: editora,
+                    valor: valor
                 } 
             });
             if(createLivro.length === 0) {

@@ -1,14 +1,11 @@
 import { prisma } from "../prisma.js";
 
 class usuarioController {
-    async getAll(req, res, next) { 
+    async getAll(req, res) { 
         try {
             const usuarios = await prisma.usuario.findMany()
             res.status(200).json(usuarios);
 
-            if (usuarios.length === 0 ) {
-                return res.status(404).json({message: 'Nenhum registro encontrado'})
-            }
         } catch (e) {
             res.status(500).json({message: 'Erro ao retornar usuário'});
         }
