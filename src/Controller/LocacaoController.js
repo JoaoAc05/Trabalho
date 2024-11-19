@@ -3,7 +3,11 @@ import { prisma } from "../prisma.js";
 class locacaoController {
     async getAll(req, res) { 
         try {
-            const locacao = await prisma.locacao.findMany()
+            const locacao = await prisma.locacao.findMany({
+                include: {
+                    Livro: true
+                }
+            })
             res.status(200).json(locacao);
 
             if (locacao.length === 0 ) {

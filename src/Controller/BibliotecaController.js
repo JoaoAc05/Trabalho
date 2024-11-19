@@ -62,8 +62,8 @@ class bibliotecaController {
                     Livro: {
                         connect: {id: Number(id_livro)}
                     },
-                    quantidade: quantidade,
-                    quantidade_disp: quantidade_disp
+                    quantidade: Number(quantidade),
+                    quantidade_disp: Number(quantidade_disp)
                 }
             });
             res.status(201).json(createBiblioteca);
