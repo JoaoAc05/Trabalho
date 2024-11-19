@@ -80,8 +80,8 @@ class locacaoController {
                     Usuario: {
                         connect: {id: Number(id_cliente)}
                     },
-                    quantidade: quantidade,
-                    valor: valor
+                    quantidade: Number(quantidade),
+                    valor: parseFloat(valor)
                 }
             });
 
@@ -168,7 +168,7 @@ class locacaoController {
         }
         
         try {
-            
+
             const updateLocacao = await prisma.locacao.updateMany({
                 where: {
                     id: parseInt(id),
