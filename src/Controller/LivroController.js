@@ -42,10 +42,10 @@ class livroController {
             const createLivro = await prisma.livro.create({ 
                 data: {
                     nome: nome,
-                    paginas: paginas,
+                    paginas: Number(paginas),
                     autor: autor, 
                     editora: editora,
-                    valor: valor
+                    valor: parseFloat(valor)
                 } 
             });
             if(createLivro.length === 0) {
