@@ -7,7 +7,7 @@ class usuarioController {
             res.status(200).json(usuarios);
 
         } catch (e) {
-            res.status(500).json({message: 'Erro ao retornar usuário'});
+            res.status(500).json({message: 'Erro ao retornar usuário: ' + e.message});
         }
     }
 

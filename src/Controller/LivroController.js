@@ -9,7 +9,7 @@ class livroController {
                 return res.status(404).json({message: 'Nenhum registro encontrado'})
             }
         } catch (e) {
-            res.status(500).json({message: 'Erro ao retornar livro'});
+            res.status(500).json({message: 'Erro ao retornar livro: ' + e.message});
         }
     }
 

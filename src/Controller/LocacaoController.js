@@ -10,7 +10,7 @@ class locacaoController {
                 return res.status(404).json({message: 'Nenhum registro encontrado'})
             }
         } catch (e) {
-            res.status(500).json({message: 'Erro ao retornarLocacao'});
+            res.status(500).json({message: 'Erro ao retornarLocacao: ' + e.message});
         }
     }
 
