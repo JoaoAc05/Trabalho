@@ -168,11 +168,7 @@ class locacaoController {
         }
         
         try {
-
-            if(!data_devolucao) {
-                return res.status(400).json({message: 'O dado data_devolucao é obrigatório.'})
-            }
-
+            
             const updateLocacao = await prisma.locacao.updateMany({
                 where: {
                     id: parseInt(id),

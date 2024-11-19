@@ -9,7 +9,11 @@ class bibliotecaController {
 
     async getAll(req, res) { 
         try {
-            const bibliotecas = await prisma.biblioteca.findMany()
+            const bibliotecas = await prisma.biblioteca.findMany({
+                include: {
+                    Livro: true
+                }
+            })
             res.status(200).json(bibliotecas);
 
             if (bibliotecas.length === 0 ) {
